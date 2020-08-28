@@ -17,10 +17,13 @@
                     <div class="card-body">
                         <small class="text-muted">Hi i' am</small>
                         <h3 id="user-title" class="card-title">Golam Rabbani</h3> 
-                        <div class="social-icon">
-                            <i class="social far fa-user" id="user-icon"></i>
-                            <i class="social fas fa-phone" id="number-icon"></i>
-                            <i class="social far fa-envelope" id="e-mail-icon"></i>
+                        <div class="social-icon d-flex" style="justify-content: space-between;">
+                            <div>
+                                <i class="social far fa-user" id="user-icon"></i>
+                                <i class="social fas fa-phone" id="number-icon"></i>
+                                <i class="social far fa-envelope" id="e-mail-icon"></i>
+                            </div>
+                            <button onclick="changesUser()" class="btn btn-primary">user change</button>
                         </div>
                     </div>
                 </div>
@@ -32,7 +35,7 @@
 
     <script>
         let socialIcons = document.querySelectorAll('i');
-
+        // api
         function apiFunction(){
             fetch('https://randomuser.me/api/')
             .then(res=> res.json())
@@ -40,10 +43,11 @@
                 mainUserFunction(user);
             })
         }
-        setInterval(()=>{
-            apiFunction();
-        }, 3000)
-
+        // changes user
+        function changesUser(){
+            apiFunction()
+        }
+        // user details
         function mainUserFunction(user){
             const userNameDetails = user.results[0].name;
             
@@ -58,7 +62,7 @@
 
             displayUser(img, userName, userEmail, phoneNumber);
         }
-
+        // user-display
         function displayUser(img, userName, userEmail, phoneNumber){
             document.getElementById('image').src = img;
             document.getElementById('user-title').innerText = userName;
