@@ -1,0 +1,13 @@
+.card{
+    width:22rem;
+}
+.social{
+    text-decoration: none;
+    margin: 0px 10px 0px 0px;
+    color: dimgray;
+    font-size: 25px;
+    cursor: pointer;
+}
+.social:hover{
+    text-decoration: none;
+}

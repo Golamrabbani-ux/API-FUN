@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Random user</title>
+</head>
+<body>
+    <main>
+        <section class="random-user mt-5">
+            <div class="container d-flex justify-content-center">
+                <div class="card">
+                    <img id="image" class="card-img-top" src="https://avatars3.githubusercontent.com/u/61206200?s=400&u=477f6382fda67fe4918f0a3c23356f7c6ebcab46&v=4" alt="Card image cap">
+                    <div class="card-body">
+                        <small class="text-muted">Hi i' am</small>
+                        <h3 id="user-title" class="card-title">Golam Rabbani</h3> 
+                        <div class="social-icon">
+                            <i class="social far fa-user" id="user-icon"></i>
+                            <i class="social fas fa-phone" id="number-icon"></i>
+                            <i class="social far fa-envelope" id="e-mail-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+    <script>
+        let socialIcons = document.querySelectorAll('i');
+
+        function apiFunction(){
+            fetch('https://randomuser.me/api/')
+            .then(res=> res.json())
+            .then(user => {
+                mainUserFunction(user);
+            })
+        }
+        setInterval(()=>{
+            apiFunction();
+        }, 3000)
+
+        function mainUserFunction(user){
+            const userNameDetails = user.results[0].name;
+            
+            const nameTitle = userNameDetails.title;
+            const firstName = userNameDetails.first;
+            const lastName = userNameDetails.last;
+
+            const userName = `${nameTitle} ${firstName} ${lastName}`;
+            const userEmail = user.results[0].email;
+            const phoneNumber = user.results[0].cell;
+            const img = user.results[0].picture.large;
+
+            displayUser(img, userName, userEmail, phoneNumber);
+        }
+
+        function displayUser(img, userName, userEmail, phoneNumber){
+            document.getElementById('image').src = img;
+            document.getElementById('user-title').innerText = userName;
+
+            for (let i = 0; i < socialIcons.length; i++) {
+                socialIcons[i].addEventListener('mouseover', function(e){
+                    if(e.target === document.getElementById('user-icon')){
+                        document.getElementById('user-title').innerText = userName;
+                    }
+                    else if(e.target === document.getElementById('e-mail-icon')) {
+                        document.getElementById('user-title').innerText = userEmail;
+                    }
+                    else {
+                        document.getElementById('user-title').innerText = phoneNumber;
+                    }    
+                });
+            }
+        }
+    </script>
+</body>
+</html>
